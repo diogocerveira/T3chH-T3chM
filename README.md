@@ -1,9 +1,8 @@
-# SurgeNet
+# A personified Framework for Machine model Teaching
 
-TEMPLATE
 ## Description
-Machine Learning for Surgical Video Phase Analysis
-This project aims to develop and evaluate machine learning models, specifically neural networks, to assist in various surgical procedures. Our objective is to enhance precision, improve patient outcomes, and reduce risks through intelligent data analysis.
+The framework is built around a [[Student]]-[[Teacher]]-[[Classroom]] metaphor — a model that is trained and evaluated in a run environment with specific properties.
+Each classroom has one single way of teaching (e.g. multi-label) a certain subject matter (i.e. dataset), while allowing for different kinds of models to be evaluated through different tests.
 
 ## Table of Contents
 - [Installation](#installation)
@@ -14,56 +13,65 @@ This project aims to develop and evaluate machine learning models, specifically 
 - [Contributing](#contributing)
 - [License](#license)
 
+
+## Contributing
+(tbd)
+
+## License
+(tbd)
+
+## Acknowledgments
+
+# User Manual
 ## Installation
 To set up the project environment, clone the repository and install the required packages:
 
-```bash
 git clone https://github.com/yourusername/surgical-nn.git
 cd surgical-nn
 pip install -r requirements.txt
 
 ## Usage
-Training the Model
-To train the neural network, run the following command:
+Create a config file (template available at settings/). Dynamic args not finished.
 
-```bash
-python train_model.py --config config.yaml
-Running Evaluations
-After training, you can evaluate the model performance:
+## Functions
+Each function kind has a personified object class associated.
 
-```bash
-python evaluate.py --model path/to/model_checkpoint.pth
-Data
-The dataset consists of annotated surgical videos and images, accessible in the data/processed directory. Ensure that the data is properly preprocessed according to the specifications outlined in data/dataset_preparation.py.
+### Data-related
+Handled by [[The Virtual Cataloguer]] and [[SampledVideoDataset]].
+Direction: Raw Video → Labeled Video Frames [→ Frame Splits] → Batches of Frames
 
-## Model Architecture
-This project implements several neural network architectures including:
+### Teaching-related
+Handle by [[Machine Teacher]].
+Direction: Batches of Frames → Model Predictions → Performance Scores
 
-### Convolutional Neural Networks (CNNs) for image analysis.
-### Recurrent Neural Networks (RNNs) for temporal sequence data from surgical videos.
-Refer to src/model.py for detailed architecture specifications.
+### Model-related
+Handled by [[Machine  Student]].
 
-## Training and Evaluation
-The training process includes cross-validation to ensure robust model performance. Validation metrics such as accuracy, precision, and recall are logged for analysis. Results can be visualized using TensorBoard.
+### Run-related
+Handled by [[Machine Classroom]] and Interface.
+From the perspective of the user, the framework follows a three-action structure:
+- Train: Train and Export model (as state dicts, with logging);
+- Evaluate: Test (generate a prediction bundle) and assess performance;
+- Process: Extra manipulation (e.g. preprocessing, feature extraction, and post-processing results with a mode filter).
 
-## Contributing
-Contributions are welcome! Please read our Contributing Guidelines for details on the code of conduct, and the process for submitting pull requests.
+## Use Requirements
+Brain, computer with high-grade GPUs.
 
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+# Developer Manual
+## Folder Structure
+**settings/**: Configuration files for framework-user interaction.
+**data/**: Contains local and/or external datasets, samples, labels, and annotations.
+**logs/**: Stores run outputs for classrooms and its students. Categorized into Process (extracted feature and post processed results), Train (TensorBoard log events, saved model states, exported predictions) and Eval (results)
+**src/**: Houses main scripts: catalogue.py (data-related), machine.py (model-related), teaching.py (teaching-related - training, validation and testing), environment.py (run-related) and learning.py (main script).
 
-## Acknowledgments
-OpenAI for providing cutting-edge machine learning research and models.
-Medical Data Resources for sharing surgical datasets.
-Based on:
+## Implementation and Tools
+Tools Used: Python 3.10, Visual Studio Code, GitHub
+Libraries: PyTorch, TorchVision, Scikit-Learn, Pandas, NumPy, Matplotlib, Seaborn, TensorBoard
+Configuration Management: Argparse, YAML
 
-https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
-
-https://www.scaler.com/topics/pytorch/how-to-split-a-torch-dataset/
-
-CIFAR10 Dataset: https://www.cs.toronto.edu/~kriz/cifar.html
-
-Pytorch Forums / Documentation
-
-(hyperparameters default + mostly ChatGPT)
-https://github.com/NVIDIA/DeepLearningExamples/blob/master/PyTorch/Classification/ConvNets/resnet50v1.5/README.md
+## Features
+- Simple to understand
+- Easy to use for a surgeon
+- Adaptable to a game-like GUI
+## Backlog
+## Bugs
